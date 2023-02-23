@@ -1,0 +1,25 @@
+﻿@model Tuple<string, FemboySoundRootobject>
+
+@{
+    if (Model.Item1 == null || Model.Item2 == null)
+    {
+        <h1> Something went wrong... </h1>
+        using (Html.BeginForm("Index", "Home"))
+        {
+            <button> Return to home page </button>
+        }
+    }
+    else
+    {
+        ViewData["Title"] = "Get Femboyed";
+        <div class="text-center">
+            <h2>@Model.Item2.response</h2>
+            <div>
+                <img height="600" width="600" src="@Model.Item1"/>
+            </div>
+            <button onclick="location.href='/home/Last'"> Go back </button>
+            <button onclick="location.href='/home/Femboys'"> Next femboy </button>
+        </div>
+    }
+}
+

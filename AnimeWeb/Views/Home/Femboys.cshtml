@@ -1,0 +1,17 @@
+﻿@model Tuple<FemboySoundRootobject, FemboyRootobject>
+
+@{
+    ViewData["Title"] = "Get Femboyed";
+}
+
+<div class="text-center">
+    <h2>@Model.Item1.response</h2>
+    <div>
+        <img height="600" width="600" src="@Model.Item2.url"/>
+    </div>
+    <button onclick="location.href='/home/Last'"> Go back </button>
+    <a href="@Model.Item2.url" target="_blank"> Open in new window </a>
+    <button onclick="location.href='/home/Femboys'"> Next femboy </button>
+</div>
+
+

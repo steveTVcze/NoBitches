@@ -1,0 +1,24 @@
+﻿@model SearchAnimeModel.Rootobject
+
+@{
+    ViewBag.Title = "Search Anime";
+}
+
+@foreach (var i in Model.data)
+{
+    <div style="background: gray; justify-content: center; margin-top: 100px; text-align:center; border-radius: 5px 60px 60px ">
+        <h2>@i.title</h2>
+        <p> <strong> Rank : </strong> @i.rank</p>
+        <p> <strong> Score : </strong> @i.score </p>
+        <p> <strong> Episodes : </strong>@i.episodes
+            @{
+                string[] idArray = i.url.Split('/');
+                int id = Convert.ToInt32(idArray[4]);
+            }
+        <p> <strong> Aired : </strong> @i.aired.from - @i.aired.to</p>
+        <img height="200" width="140" src="@i.images.jpg.image_url">
+        <p> <strong> Favorites : </strong> @i.favorites </p>
+        <a style="text-decoration:none; color:black; padding-right: 30px " target="_blank" href="@i.url">@i.title on MyAnimeList </a>
+        <button width="80" onclick="location.href='/home/animedetail?id=@id'"> Get detail for @i.title </button>
+    </div>
+}

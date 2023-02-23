@@ -1,0 +1,12 @@
+﻿@model AnimeWeb.Models.WaifuModel.Root
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Waifuus </h2>
+@foreach (var i in Model.Images)
+{
+    <img width="600" height="600" src="@i.Url"/>
+}
+<button onclick="location.href='/home/GetRandomWaifu'"> Next waifu</button>

@@ -1,0 +1,125 @@
+﻿@model Tuple<AnimeDetail.Root, AnimeCharactersModel.Rootobject, AnimeReviewsModel.Root, AnimeNewsModel.Root>
+
+@{
+    if (Model.Item1 == null || Model.Item2 == null || Model.Item3 == null)
+    {
+        <h1> Something went wrong... Please wait before using every endpoint of the API for some time. It has limitations such as 3 requests per second so please just wait.</h1>
+        using (Html.BeginForm("Index", "Home"))
+        {
+            <button> Return to home page </button>
+        }
+    }
+
+    else
+    {
+        string filler = " - ";
+        string filler2 = ", ";
+        string filler3 = " ";
+        ViewBag.Title = @Model.Item1.Data.Title;
+        <div>
+            <h1>
+                @Model.Item1.Data.Title
+            </h1>
+            <h4> <strong> Rank : </strong> @Model.Item1.Data.Rank</h4>
+            <p> <strong> Score : </strong> @Model.Item1.Data.Score</p>
+            <p> <strong> Rating : </strong>@Model.Item1.Data.Rating</p>
+            <p> <strong> Year : </strong> @Model.Item1.Data.Year</p>
+            <p> <strong> Duration : </strong> @Model.Item1.Data.Duration</p>
+            <p> <strong>  Type : </strong> @Model.Item1.Data.Type</p>
+            <p> <strong> Aired : </strong> @Model.Item1.Data.Aired.From - @Model.Item1.Data.Aired.To</p>
+            <p> <strong> Favorites : </strong> @Model.Item1.Data.Favorites</p>
+            <p> <strong> Airing : </strong> @Model.Item1.Data.Airing</p>
+            <p> <strong> Theme : </strong> @Model.Item1.Data.Theme</p>
+            <p> <strong> Status : </strong> @Model.Item1.Data.Status</p>
+            <p> <strong>  Episodes : </strong> @Model.Item1.Data.Episodes</p>
+            <h5> <strong> Genres : </strong> </h5>
+            <p>
+                @foreach (var generos in Model.Item1.Data.Genres)
+                {
+                    @generos.Name @filler2
+                }
+            </p>
+            <h5> <strong> Studios : </strong></h5>
+            <p>
+                @foreach (var studios in Model.Item1.Data.Studios)
+                {
+                     @studios.Name @filler3
+                }
+            </p>
+            <h5> <strong> Synopsis : </strong></h5>
+            <p> @Model.Item1.Data.Synopsis</p>
+            <h5> <strong> Relations : </strong></h5>
+            @foreach (var item in @Model.Item1.Data.Relations)
+            {
+                <p>
+                    @foreach (var itemik in @item.Entry)
+                    {
+                        @itemik.Name
+                    }
+                @filler
+                    <strong> @item.Relation </strong>
+                    
+                 @filler3   
+                </p>
+            }
+            
+            <iframe width="1250" height="703" src="https://www.youtube.com/embed/@Model.Item1.Data.Trailer.EmbedUrl" title="KonoSuba Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+
+        </div>    
+        <div>
+            <h2>
+                Characters : 
+            </h2>
+            @foreach (var item in Model.Item2.data)
+            {
+                <div style="padding-top: 50px">
+                <div>
+                <p  style="background: red"> <strong> Name : </strong> @item.character.name </p>
+                <p> <strong> Favorites : </strong> @item.favorites </p>
+                <p> <strong> Role : </strong> @item.role</p>
+                <img height="200" width="200" src="@item.character.images.jpg.image_url" />
+                </div>
+                <div style="display:flex; flex-direction:column; padding-top: 40px; padding-bottom: 40px">
+                @foreach (var itemik in item.voice_actors)
+                {
+                    <div width="350px">
+                        <h6>  @itemik.language @filler @itemik.person.name </h6>
+                        <img height="180" width="120" src="@itemik.person.images.jpg.image_url" />
+                        <a href="@itemik.person.url "> More info on MAL </a>
+                    </div>
+                }
+                </div>
+                </div>
+            }
+        </div>
+        <div style="padding-top: 100px">
+            <h2> Reviews : </h2>
+            @foreach (var item in Model.Item3.Data)
+            {
+                <p> <strong> Score : </strong>  @item.Score</p>
+                <p> <strong> Review :</strong> @item.Review</p>
+            }
+        </div>
+
+        //News endpoint má strašně velké limitace :ˇ/
+
+        if (Model.Item4 == null)
+        {
+            <p> API won't let you use endpoint for news, such a pity :(</p> 
+        }
+        else
+        {
+            <div>
+            @foreach (var item in Model.Item4.Data)
+            {
+                <p> <strong> Date : </strong> @item.Date</p>
+                <p> <strong> Author : </strong> @item.AuthorUsername</p>
+                <p> <strong> MALID :</strong> @item.MalId</p>
+                <a href="@item.Url"> Url </a>
+                <a href="@item.ForumUrl"> ForumUrl</a>
+            }
+        </div>
+        }
+        
+    }
+}

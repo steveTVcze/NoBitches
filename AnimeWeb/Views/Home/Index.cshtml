@@ -1,0 +1,82 @@
+﻿@model Rootobject
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    string search = "";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <div>
+        <button onclick="location.href='/home/Femboys'" > Fembooooys </button>
+        <button onclick="location.href='/home/GetRandomWaifu'"> Random waifu </button>
+    </div>
+    <button style="margin-top: 35px" class="btn-primary" onclick="location.href='/home/Upcoming'"> Upcoming anime </button>
+    <h2 style="padding-top: 30px"> Search Anime</h2>
+    <selection>
+            @using (Html.BeginForm("Search", "Home"))
+            {
+                <div style="display: flex; flex-direction: row; justify-content: center">
+                    <p style="padding-right: 20px"> Anime : </p>
+                    <input type="text" width="700" placeholder="Search anime... " name="name" />
+                </div>
+
+            <div style="display: flex; flex-direction: row; justify-content: center">
+                    <p> Show NSFW? : </p>
+                    <input type="checkbox" style="margin-bottom: 14px; margin-left: 15px" name="sfw" />
+                </div>
+                <button style="margin-left: 50px; padding-left: 25px; padding-right: 25px" class="btn-primary" type="submit"> Search anime </button>
+            }
+        </selection>
+        <selection>
+            @using (Html.BeginForm("SearchUser", "Home"))
+            {
+            <div style="display: flex; flex-direction: row; justify-content: center;  margin-top: 30px">
+                    <p style="padding-right: 20px"> User : </p>
+                <input style="margin-bottom: 14px" width="600" type="text" placeholder="Example: stevetv" name="username" />
+                </div>
+                <button style="margin-left: 50px; padding-left: 25px; padding-right: 25px" class="btn-primary" type="submit"> Search user </button>
+            }
+        </selection>
+    @{
+        int i = 1;
+        string filler = ", ";
+        string filler2 = " ";
+
+    }
+    <h2 style="padding-top: 100px"> TOP RATED ANIME </h2>
+    @foreach (var item in @Model.data)
+    {
+        <div style="padding-top: 40px"> 
+            <h4>
+                @i place :  @item.title_english
+            </h4>
+            <img height="200" width="130" src="@item.images.webp.large_image_url" />
+            <p> <strong> Rating : </strong> @item.rating</p>
+            <p> <strong> Duration : </strong> @item.duration</p>
+            <p> <strong>  Episodes : </strong> @item.episodes</p>
+            <p> <strong> Favorites : </strong> @item.favorites</p>
+            <p> <strong> Aired : </strong> @item.aired.from - @item.aired.to</p>
+            <h5> <strong> Genres : </strong> </h5>
+            <p>
+                @foreach (var generos in @item.genres)
+                {
+                    @generos.name @filler
+                }
+            </p>
+            <h5> <strong> Studios : </strong></h5>
+            <p>
+                @foreach (var studios in @item.studios)
+                {
+                     @studios.name @filler2
+                }
+            </p>
+            <h5> <strong> Synopsis : </strong></h5>
+            <p> @item.synopsis</p>
+
+        </div>
+        i++;
+    }
+</div>

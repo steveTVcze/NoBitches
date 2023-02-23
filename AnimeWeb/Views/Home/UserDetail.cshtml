@@ -1,0 +1,58 @@
+﻿@model DetailProfile.Rootobject
+
+
+@{
+    if (Model == null)
+    {
+        <h1> Something went wrong... Please wait before using every endpoint of the API for some time. It has limitations such as 3 requests per second so please just wait.</h1>
+        using (Html.BeginForm("Index", "Home"))
+        {
+            <button> Return to home page </button>
+        }
+    }
+    else
+    {
+        
+        ViewBag.Title = Model.data.username;
+        <div>
+            <img src="@Model.data.images.jpg.image_url" />
+            <h3>Info : </h3>
+            <p> B-day : @Model.data.birthday</p>
+            <p> Gender : @Model.data.gender</p>
+            <p> Joined : @Model.data.joined</p>
+            <p> Location : @Model.data.location</p>
+            <h3>Stats for anime:</h3>
+            <p> Completed anime : @Model.data.statistics.anime.completed</p>
+            <p> Plan to watch : @Model.data.statistics.anime.plan_to_watch</p>
+            <p> Episodes watched : @Model.data.statistics.anime.episodes_watched</p>
+            <p> Days : @Model.data.statistics.anime.days_watched</p>
+            <p> Dropped : @Model.data.statistics.anime.dropped</p>
+            <p> Watching : @Model.data.statistics.anime.watching</p>
+            <p> Mean score : @Model.data.statistics.anime.mean_score</p>
+            <h3>Stats for manga:</h3>
+            <p> Completed anime : @Model.data.statistics.manga.completed</p>
+            <p> Plan to watch : @Model.data.statistics.manga.plan_to_read</p>
+            <p> Episodes watched : @Model.data.statistics.manga.chapters_read</p>
+            <p> Days : @Model.data.statistics.manga.days_read</p>
+            <p> Dropped : @Model.data.statistics.manga.dropped</p>
+            <p> Watching : @Model.data.statistics.manga.reading</p>
+            <p> Mean score : @Model.data.statistics.manga.mean_score</p>
+            <h3> Favorite anime : </h3>
+            @foreach (var item in @Model.data.favorites.anime)
+            {
+                <p> @item.title</p>
+            }
+            <h3> Favorite manga : </h3>
+            @foreach (var item in @Model.data.favorites.manga)
+            {
+                <p> @item.title</p>
+            }
+            <h3> External : </h3>
+            @foreach (var itemik in Model.data.external)
+            {
+                <p> @itemik.name </p>
+                <a href="@itemik.url"> url</a>
+            }
+        </div>
+    }
+}

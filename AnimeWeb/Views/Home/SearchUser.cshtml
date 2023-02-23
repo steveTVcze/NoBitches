@@ -1,0 +1,29 @@
+﻿@model UserModel.Rootobject
+
+
+@{
+    if (Model == null)
+    {
+        <h1> Something went wrong... Please wait before using every endpoint of the API for some time. It has limitations such as 3 requests per second so please just wait.</h1>
+        using (Html.BeginForm("Index", "Home"))
+        {
+            <button> Return to home page </button>
+        }
+    }
+    else
+    {
+        
+        ViewBag.Title = "Users search";
+        <div>
+            @foreach (var item in Model.data)
+            {
+                <p> @item.username </p>
+                <a href="@item.url"> Go to the profile</a>
+                <p> Last logged in : @item.last_online</p>
+                <img height="150" width="150" src="@item.images.jpg.image_url" />
+                <button class="btn-primary" onclick="location.href='/home/userdetail?username=@item.username'"> More details </button>
+            }
+        </div>
+    }
+}
+

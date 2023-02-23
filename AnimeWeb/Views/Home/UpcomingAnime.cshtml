@@ -1,0 +1,43 @@
+﻿@model UpcomingAnimeModel.Rootobject
+
+@{
+    if (Model == null)
+    {
+        <h1> Something went wrong... Please wait before using every endpoint of the API for some time. It has limitations such as 3 requests per second so please just wait.</h1>
+        using (Html.BeginForm("Index", "Home"))
+        {
+            <button> Return to home page </button>        
+        }
+    }
+    else
+    {
+        ViewBag.Title = "Upcoming anime";
+        <div>
+            @foreach (var item in Model.data)
+            {
+                <h3>@item.title</h3>
+                <p> <strong> Members : </strong> @item.members</p>
+                <p> <strong> Status : </strong> @item.status</p>
+                <p> <strong> Rating : </strong> @item.rating</p>
+                if (item.season == null)
+                {
+                    <p> <strong> Season : </strong> no info :( </p>
+                }
+                else
+                {
+                    <p> <strong> Season : </strong> @item.season</p>
+                }
+                if (item.approved == null)
+                {
+                    <p> <strong> Approved : </strong> not yet approved :( </p>
+                }
+                else
+                {
+                    <p> <strong> Approved : </strong> @item.approved</p>
+                }
+                <img src="@item.images.jpg.image_url" />
+                <p style="padding-bottom: 30px"> <strong> Synopsis : </strong> @item.synopsis</p>
+            }
+        </div>
+    }
+}
